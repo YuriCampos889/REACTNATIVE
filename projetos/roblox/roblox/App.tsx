@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Text, View, TextInput, Image, TouchableOpacity, FlatList, ScrollView, ActivityIndicator } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useFonts, Montserrat_800ExtraBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat'
+import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { styles } from './styles';
+import { useFonts, Montserrat_800ExtraBold, Montserrat_700Bold, Montserrat_300Light, Montserrat_400Regular } from '@expo-google-fonts/montserrat';
 
-import styles from './styles1';
+const App = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
 
-export default function App() {
-  const [searchQuery, setSearchQuery] = useState('');
-  
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   const [fontsLoaded] = useFonts({
-    Montserrat_800ExtraBold, Montserrat_700Bold
+    Montserrat_800ExtraBold, Montserrat_700Bold, Montserrat_300Light, Montserrat_400Regular
   });
 
   if (!fontsLoaded) {
@@ -21,239 +22,132 @@ export default function App() {
     );
   }
 
-  const friends = [
-    { id: '1', name: 'Adicionar\namizades', image: 'https://i.ibb.co/0n3JCd3/Imagem-do-Whats-App-de-2024-11-09-s-17-08-57-cbe8f85f.jpg' },
-    { id: '2', name: 'Tikpokc', image: 'https://i.ibb.co/C0J0ByZ/image.png' },
-    { id: '3', name: '🟢 R0oster', image: 'https://i.ibb.co/YcPLQV0/Imagem-do-Whats-App-de-2024-11-10-s-17-06-39-9a5d3f53.jpg' },
-
-  ];
-
-  const recommendations = [
-    { id: '1', name: 'Dress To Impress', rating: '91%', image: 'https://i.ibb.co/Jz1X5mK/Imagem-do-Whats-App-de-2024-11-09-s-17-19-53-f5061c7d.jpg' },
-    { id: '2', name: 'Galinha', rating: '90%', image: 'https://i.ibb.co/9tkTWqg/Imagem-do-Whats-App-de-2024-11-09-s-19-42-04-98fab120.jpg' },
-  ];
-
-  const peopleYouMayKnow = [
-    { id: '1', name: 'nICOliTe739', image: 'https://i.ibb.co/jwZ0m7R/Imagem-do-Whats-App-de-2024-11-09-s-19-47-11-53d99ea1.jpg' },
-    { id: '2', name: 'Speket045', image: 'https://i.ibb.co/Pr9hxk2/Imagem-do-Whats-App-de-2024-11-09-s-19-47-34-056dc288.jpg' },
-    { id: '3', name: 'Kadu_Korinthians', image: 'https://i.ibb.co/J3YPfGt/Imagem-do-Whats-App-de-2024-11-09-s-19-48-01-0fdb259d.jpg' },
-  ];
-
-  const continuePlaying = [
-    { id: '1', name: 'Seja um\nBuraco', image: 'https://i.ibb.co/gSqqxYG/Imagem-do-Whats-App-de-2024-11-09-s-19-33-40-57fa5576.jpg', rating: '72%', visits: '6.2mil' },
-    { id: '2', name: 'Porco \nFaminto', image: 'https://i.ibb.co/SKxvLyK/Imagem-do-Whats-App-de-2024-11-09-s-19-35-15-13f24152.jpg', rating: '85%', visits: '4.1mil' },
-    { id: '3', name: 'Último a Sair', image: 'https://i.ibb.co/8gLbk5c/Imagem-do-Whats-App-de-2024-11-09-s-20-20-46-32490463.jpg', rating: '91%', visits: '7.5mil' },
-  ];
-
-  const sponsored = [
-    { id: '1', name: 'Total\nDrama Robl..', image: 'https://i.ibb.co/qyn4QRV/Imagem-do-Whats-App-de-2024-11-10-s-16-31-44-c573362c.jpg', rating: '72%', visits: '6.2mil' },
-    { id: '2', name: 'Passe\na Bomba', image: 'https://i.ibb.co/hcDSnd4/Imagem-do-Whats-App-de-2024-11-10-s-16-31-44-bfb8a0d6.jpg', rating: '85%', visits: '4.1mil' },
-    { id: '3', name: 'Clothes\n& Style Ho...', image: 'https://i.ibb.co/YjFg50f/Imagem-do-Whats-App-de-2024-11-10-s-16-31-44-14d5f48a.jpg', rating: '91%', visits: '7.5mil' },
-  ];
-
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-
-      <View style={styles.searchBar}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Buscar"
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        <MaterialIcons name="search" size={24} color="#000" />
-      </View>
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-
-        <View style={styles.profileContainer}>
-          <Image style={styles.profileImage} source={{ uri: 'https://i.ibb.co/xFPkRbV/Imagem-do-Whats-App-de-2024-11-09-s-20-25-48-2053d2bc.jpg' }} />
-          <Text style={styles.profileName}>Siri que canta</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.closeIcon}>
+          <Text style={styles.closeIconText}>✕</Text>
+        </TouchableOpacity>
+        <View style={styles.userInfo}>
+          <Image
+            source={{ uri: 'https://i.ibb.co/ZSr8Vtm/Imagem-do-Whats-App-de-2024-11-11-s-11-17-53-21f92382.jpg' }}
+            style={styles.avatar}
+          />
+          <View style={styles.userDetails}>
+            <Text style={styles.username}>[UPD] Galinha 🐓</Text>
+            <Text style={styles.userTag}>Firemalte07</Text>
+          </View>
         </View>
-
-        <View style={styles.voiceChatContainer}>
-  <View style={styles.iconContainer}>
-    <Image 
-      source={{ uri: 'https://i.ibb.co/318PkTc/image.png' }}
-      style={styles.icon}
-    />
-    <Text style={styles.voiceChatText}>Desbloquear o Bate-papo de voz</Text>
-  </View>
-  <Text style={styles.voiceChatSubText}>Adicione um número de telefone para ativar{"\n"}o Bate-papo de voz.</Text>
-  <TouchableOpacity style={styles.button}>
-    <Text style={styles.buttonText}>Adicionar número de telefone</Text>
-  </TouchableOpacity>
-</View>
-
-
-        <Text style={styles.sectionTitle}>Amizades (1)</Text>
-        <FlatList
-          horizontal
-          data={friends}
-          renderItem={({ item }) => (
-            <View style={styles.friendContainer}>
-              <Image style={styles.friendImage} source={{ uri: item.image }} />
-              <Text style={styles.friendName}>{item.name}</Text>
-            </View>
-          )}
-          keyExtractor={(item) => item.id}
-        />
-
-<Text style={styles.sectionTitle}>Recomendações para você</Text>
-<FlatList
-  horizontal
-  data={recommendations}
-  renderItem={({ item }) => (
-    <View style={styles.recommendationContainer}>
-      <Image style={styles.recommendationImage} source={{ uri: item.image }} />
-      <Text style={styles.recommendationName}>{item.name}</Text>
-      <View style={styles.ratingContainer}>
-        <Image 
-          style={styles.ratingIcon} 
-          source={{ uri: 'https://i.ibb.co/kKBdR4F/Imagem-do-Whats-App-de-2024-11-10-s-17-22-40-e396ee70.jpg' }} 
-        />
-        <Text style={styles.recommendationRating}>Avaliação {item.rating}</Text>
+        <TouchableOpacity style={styles.notificationIcon}>
+          <Image
+            source={{ uri: 'https://i.ibb.co/wKwGWn0/Imagem-do-Whats-App-de-2024-11-11-s-11-20-54-bc60dbf2.jpg' }}
+            style={styles.notificationIcon}
+          />
+        </TouchableOpacity>
       </View>
-    </View>
-  )}
 
+      <Image
+        source={{ uri: 'https://i.ibb.co/cy26QXG/Imagem-do-Whats-App-de-2024-11-11-s-11-17-18-765c8042.jpg' }}
+        style={styles.mainImage}
+      />
 
-          keyExtractor={(item) => item.id}
-        />
+      <View style={styles.stats}>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Classificação</Text>
+          <Text style={styles.statValue}>90%</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Ativo</Text>
+          <Text style={styles.statValue}>1,9 mil</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Visitas</Text>
+          <Text style={styles.statValue}>18,9 mi</Text>
+        </View>
+      </View>
 
-        <Text style={styles.sectionTitle}>Pessoas que você pode conhecer ({peopleYouMayKnow.length})</Text>
-        <FlatList
-  horizontal
-  data={peopleYouMayKnow}
-  renderItem={({ item }) => (
-    <View style={styles.personContainer}>
-      <Image style={styles.personImage} source={{ uri: item.image }} />
-      <View style={styles.personInfoContainer}>
-        <Text style={styles.personName}>{item.name}</Text>
+      <View style={styles.description}>
+        <Text style={styles.descriptionTitle}>Descrição</Text>
+        <Text style={styles.descriptionText} numberOfLines={isExpanded ? undefined : 3}>
+          Roube o ovo das galinhas e corra! Ganhe pontos por quanto tempo você sobrevive sem ser pego. {"\n\n"} 
+          ATUALIZACAO {"\n"} 
+          As galinhas Douradas podem aparecer aleatoriamente! Elas dão 5X mais pontos que as galinhas normais! {"\n\n"} 
+          Dê um like ao jogo para mostrar seu apoio! {"\n"} 
+          Certifique-se de marcar o jogo como favorito para não perder nenhuma atualizacao
+        </Text>
+        
+        <TouchableOpacity onPress={toggleExpand} style={styles.iconButton1}>
+          <Image
+            source={{
+              uri: isExpanded
+                ? 'https://i.ibb.co/whw7F12/Imagem-do-Whats-App-de-2024-11-11-s-20-44-01-a6a98ba5.jpg'
+                : 'https://i.ibb.co/BtxvSPq/Imagem-do-Whats-App-de-2024-11-11-s-20-44-15-d7b54749.jpg'
+            }}
+            style={styles.iconImage}
+          />
+        </TouchableOpacity>
+      </View>
 
-        <View style={styles.personDetailsContainer}>
-          <Text style={styles.personCommonFriend}>
-            <Image 
-              style={styles.personIcon} 
-              source={{ uri: 'https://i.ibb.co/MsQwzdR/Imagem-do-Whats-App-de-2024-11-10-s-17-36-25-47019137.jpg' }} 
+      <View style={styles.rating}>
+        <View style={styles.ratingInfo}>
+          <Image
+            source={{ uri: 'https://i.ibb.co/XpXSPCX/Imagem-do-Whats-App-de-2024-11-11-s-11-20-23-f7d9795f.jpg' }}
+            style={styles.ratingIcon}
+          />
+          <Text style={styles.ratingValue}>90%</Text>
+          <Text style={styles.ratingVotes}>36,7 MIL VOTOS</Text>
+        </View>
+        <View style={styles.ratingButtons}>
+          <TouchableOpacity style={styles.downvoteButton}>
+            <Image
+              source={{ uri: 'https://i.ibb.co/ZK0FLJ2/Imagem-do-Whats-App-de-2024-11-11-s-11-19-14-7d66656b.jpg' }}
+              style={styles.voteIcon}
             />
-            1 amizade em{"\n"}comum
-          </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.upvoteButton}>
+            <Image
+              source={{ uri: 'https://i.ibb.co/XzH9ZVh/Imagem-do-Whats-App-de-2024-11-11-s-11-44-08-51fa8279.jpg' }}
+              style={styles.voteIcon}
+            />
+          </TouchableOpacity>
         </View>
       </View>
-    </View>
-  )}
-  keyExtractor={(item) => item.id}
-/>
 
-<Text style={styles.sectionTitle}>Continuar </Text>
-<FlatList
-  horizontal
-  data={continuePlaying}
-  renderItem={({ item }) => (
-    <View style={styles.continueContainer}>
-      <Image style={styles.continueImage} source={{ uri: item.image }} />
-      <Text style={styles.continueName}>{item.name}</Text>
-
-      <View style={styles.continueStatsContainer}>
-        <View style={styles.continueStat}>
-          <Image 
-            style={styles.continueStatIcon} 
-            source={{ uri: 'https://i.ibb.co/kKBdR4F/Imagem-do-Whats-App-de-2024-11-10-s-17-22-40-e396ee70.jpg' }} // URL do ícone de avaliação
-          />
-          <Text style={styles.continueStatText}>{item.rating}</Text>
+      <View style={styles.actions}>
+        <View style={styles.titleRow}>
+          <Text style={styles.actionText}>Assinaturas e passes</Text>
+          <TouchableOpacity style={styles.playButton}>
+            <Image
+              source={{ uri: 'https://i.ibb.co/6HxyN7f/Imagem-do-Whats-App-de-2024-11-11-s-11-56-04-46f541ac.jpg' }}
+              style={styles.arrowIcon}
+            />
+          </TouchableOpacity>
         </View>
-
-        <View style={styles.continueStat}>
-          <Image 
-            style={styles.continueStatIcon} 
-            source={{ uri: 'https://i.ibb.co/hyYvtKh/image.png' }}
-          />
-          <Text style={styles.continueStatText}>{item.visits}</Text>
-        </View>
-      </View>
-    </View>
-  )}
-  keyExtractor={(item) => item.id}
-/>
-
-<Text style={styles.sectionTitle}>Patrocinadas</Text>
-<FlatList
-  horizontal
-  data={sponsored}
-  renderItem={({ item }) => (
-    <View style={styles.sponsoredContainer}>
-      <Image style={styles.sponsoredImage} source={{ uri: item.image }} />
-      <Text style={styles.sponsoredName}>{item.name}</Text>
-
-      <View style={styles.sponsoredStatsContainer}>
-        <View style={styles.sponsoredStat}>
-          <Image 
-            style={styles.sponsoredStatIcon} 
-            source={{ uri: 'https://i.ibb.co/kKBdR4F/Imagem-do-Whats-App-de-2024-11-10-s-17-22-40-e396ee70.jpg' }} // URL do ícone de avaliação
-          />
-          <Text style={styles.sponsoredStatText}>{item.rating}</Text>
-        </View>
-
-        <View style={styles.sponsoredStat}>
-          <Image 
-            style={styles.sponsoredStatIcon} 
-            source={{ uri: 'https://i.ibb.co/MsQwzdR/icone-visitas.png' }}
-          />
-          <Text style={styles.sponsoredStatText}>{item.visits}</Text>
+        <View style={styles.iconContainer}>
+          <View style={styles.iconRow}>
+            <TouchableOpacity style={styles.iconButton}>
+              <Image
+                source={{ uri: 'https://i.ibb.co/SwdJ8v7/Imagem-do-Whats-App-de-2024-11-11-s-11-21-25-e06b3d9d.jpg' }}
+                style={styles.optionIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconButton}>
+              <Image
+                source={{ uri: 'https://i.ibb.co/WW1DMMD/Imagem-do-Whats-App-de-2024-11-11-s-11-21-45-7165ce76.jpg' }}
+                style={styles.visitIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconButton}>
+              <Image
+                source={{ uri: 'https://i.ibb.co/R2Mpdy6/Imagem-do-Whats-App-de-2024-11-11-s-11-18-33-3a3654dc.jpg' }}
+                style={styles.playIcon}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  )}
-  keyExtractor={(item) => item.id}
-/>
-
-      </ScrollView>
-
-<View style={styles.navigationBar}>
-  <TouchableOpacity style={styles.navItem}>
-    <Image 
-      style={styles.navIcon} 
-      source={{ uri: 'https://i.ibb.co/JHz4hyq/Imagem-do-Whats-App-de-2024-11-10-s-23-07-04-86e0aff2.jpg' }} 
-    />
-    <Text style={styles.navText}>Início</Text>
-  </TouchableOpacity>
-  
-  <TouchableOpacity style={styles.navItem}>
-    <Image 
-      style={styles.navIcon} 
-      source={{ uri: 'https://i.ibb.co/P4MYZt8/Imagem-do-Whats-App-de-2024-11-10-s-23-09-45-a55b9c5b.jpg' }} 
-    />
-    <Text style={styles.navText}>Destaques</Text>
-  </TouchableOpacity>
-  
-  <TouchableOpacity style={styles.navItem}>
-    <Image 
-      style={styles.navIcon} 
-      source={{ uri: 'https://i.ibb.co/Pct978n/Imagem-do-Whats-App-de-2024-11-10-s-23-15-23-e552fa11.jpg' }} 
-    />
-    <Text style={styles.navText}>Avatar</Text>
-  </TouchableOpacity>
-  
-  <TouchableOpacity style={styles.navItem}>
-    <Image 
-      style={styles.navIcon} 
-      source={{ uri: 'https://i.ibb.co/zJdLGdT/Imagem-do-Whats-App-de-2024-11-10-s-23-10-37-35bdfcd1.jpg' }} 
-    />
-    <Text style={styles.navText}>Chat</Text>
-  </TouchableOpacity>
-  
-  <TouchableOpacity style={styles.navItem}>
-    <Image 
-      style={styles.navIcon} 
-      source={{ uri: 'https://i.ibb.co/jrZsSX3/Imagem-do-Whats-App-de-2024-11-10-s-23-10-54-f77b49b8.jpg' }} 
-    />
-    <Text style={styles.navText}>Mais</Text>
-  </TouchableOpacity>
-</View>
-
-
-    </View>
+    </ScrollView>
   );
-}
+};
+
+export default App;
